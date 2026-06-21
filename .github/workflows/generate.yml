@@ -25,7 +25,7 @@ jobs:
         run: pip install requests>=2.32.3 beautifulsoup4>=4.12.3
 
       - name: Run generate.py
-        run: python generate.py --url https://raw.githubusercontent.com/ninjastrikers/Nexus-nodes/main/configs/light.txt
+        run: python generate.py --url https://raw.githubusercontent.com/ebrasha/free-v2ray-public-list/refs/heads/main/V2Ray-Config-By-EbraSha.txt
 
       - name: Check for file changes
         id: check_changes
