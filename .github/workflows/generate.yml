@@ -5,16 +5,20 @@ on:
     - cron: '0 */2 * * *' # Every 2 hours
   workflow_dispatch:
 
+# ✅ ADD PERMISSIONS
+permissions:
+  contents: write
+
 jobs:
   generate-links:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # Updated
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5  # Updated
         with:
           python-version: '3.11'
 
@@ -27,13 +31,11 @@ jobs:
       - name: Check for file changes
         id: check_changes
         run: |
-          # Make sure links.txt exists
           if [ ! -f links.txt ]; then
             echo "links.txt not found, creating empty file"
             touch links.txt
           fi
           
-          # Check if there are changes
           if git diff --quiet links.txt; then
             echo "No changes detected in links.txt"
             echo "has_changes=false" >> $GITHUB_ENV
