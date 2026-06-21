@@ -25,7 +25,7 @@ jobs:
         run: pip install requests>=2.32.3 beautifulsoup4>=4.12.3
 
       - name: Run generate.py
-        run: python generate.py --url https://raw.githubusercontent.com/balochscript/free-vpn-configs/gh-pages/subscription-realdelay.txt
+        run: python generate.py --url https://raw.githubusercontent.com/ninjastrikers/Nexus-nodes/main/configs/light.txt
 
       - name: Check for file changes
         id: check_changes
