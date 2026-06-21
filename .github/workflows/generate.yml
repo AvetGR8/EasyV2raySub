@@ -22,16 +22,23 @@ jobs:
         run: pip install requests>=2.32.3 beautifulsoup4>=4.12.3
 
       - name: Run generate.py
-        run: python generate.py --url https://github.com/Alvin9999-newpac/fanqiang/wiki/v2ray%E5%85%8D%E8%B4%B9%E8%B4%A6%E5%8F%B7 https://github.com/Alvin9999-newpac/fanqiang/wiki/ss%E5%85%8D%E8%B4%B9%E8%B4%A6%E5%8F%B7
+        run: python generate.py --url https://raw.githubusercontent.com/balochscript/free-vpn-configs/gh-pages/subscription-realdelay.txt
 
       - name: Check for file changes
         id: check_changes
         run: |
-          if git diff --quiet; then
-            echo "No changes detected."
+          # Make sure links.txt exists
+          if [ ! -f links.txt ]; then
+            echo "links.txt not found, creating empty file"
+            touch links.txt
+          fi
+          
+          # Check if there are changes
+          if git diff --quiet links.txt; then
+            echo "No changes detected in links.txt"
             echo "has_changes=false" >> $GITHUB_ENV
           else
-            echo "Changes detected."
+            echo "Changes detected in links.txt"
             echo "has_changes=true" >> $GITHUB_ENV
           fi
 
@@ -39,9 +46,9 @@ jobs:
         if: env.has_changes == 'true'
         run: |
           git config --local user.name "GitHub Actions Bot"
-          git config --local user.email "<>"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git add links.txt
-          git commit -m "Update links.txt"
+          git commit -m "Update links.txt - $(date +'%Y-%m-%d %H:%M:%S')"
           git push
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
